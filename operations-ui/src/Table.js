@@ -1,26 +1,39 @@
+import axios from 'axios';
+
 const ReactDataGrid = require('react-data-grid');
 const React = require('react');
 
 class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.createRows();
+
     this._columns = [
       { key: 'id', name: 'ID' },
       { key: 'title', name: 'Title' },
-      ];
+    ];
 
-    this.state = null;
+    this.state = {
+      templates: [],
+    };
   }
 
-  createRows = () => {
-    let rows = [];
-    for (let i = 1; i < 1000; i++) {
-      rows.push({
-        id: i,
-        title: 'Title ' + i
+  componentDidMount() {
+    axios.get('http://localhost:8001/api/v1/modelform/template',  {responseType: 'json'})
+      .then(res => {
+        const templates = res.data;
+        this.setState({ templates });
       });
-    }
+  }
+
+  createRows = (currentTempates) => {
+    let rows = [];
+
+    currentTempates.forEach(function(t) {
+      rows.push({
+        id: t.id,
+        title: t.template,
+      });
+    });
 
     this._rows = rows;
   };
@@ -30,6 +43,8 @@ class Example extends React.Component {
   };
 
   render() {
+    const currentTempates = this.state;
+    this.createRows(currentTempates.templates);
     return  (
       <ReactDataGrid
         columns={this._columns}
