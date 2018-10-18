@@ -10,7 +10,9 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <TemplatesTable />
+        <div id={'content'}>
+          <TemplatesTable />
+        </div>
       </div>
     );
   }

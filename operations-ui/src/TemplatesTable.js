@@ -1,12 +1,10 @@
+import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import TableRow from './TableRow';
 import ReclassModelWizard from './ReclassModelWizard';
 import axios from "axios";
 
-const React = require('react');
-
-
-class TemplatesTable extends React.Component {
+class TemplatesTable extends Component {
   constructor(props, context) {
     super(props, context);
 

@@ -3,14 +3,20 @@ import {FormGroup, Label, Input, Col, Row} from 'reactstrap';
 import cx from 'classnames';
 import StepZilla from 'react-stepzilla';
 
+import './ReclassModelWizard.css'
+
 class ReclassModelWizard extends Component {
   render() {
     let activeTemplate = JSON.parse(this.props.activeTemplate);
     const steps = activeTemplate.general_params_action.map((action, index) => (
-      {name: `Step ${index}`, component: <Step key={`step-${index}`} stepFields={action.fields} />}));
+      {name: `${action.label}`, component: <Step key={`step-${index}`} stepFields={action.fields} />}));
 
     return (<div className='step-progress'>
-        <StepZilla steps={steps}/>
+        <StepZilla
+          steps={steps}
+          nextButtonCls={'btn btn-prev btn-info pull-right'}
+          backButtonCls={'btn btn-next btn-info pull-left'}
+        />
       </div>
     )
   }
@@ -67,7 +73,7 @@ class Step extends Component {
         <FormGroup
           check
           key={field.name}
-          className={cx({fade: field.hidden})}
+          className={cx({'d-none': field.hidden})}
         >
           <Label check id={field.name}>
             <Input
@@ -86,7 +92,7 @@ class Step extends Component {
       (f.type === 'BOOL') ? this.getCheckboxFormGroup(f) :
         <FormGroup
           key={f.name}
-          className={cx({fade: f.hidden})}>
+          className={cx({'d-none': f.hidden})}>
           <Label id={f.name}>
             {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
               return word.toUpperCase()
@@ -100,7 +106,7 @@ class Step extends Component {
   render() {
     return this.getFormFields(this.props.stepFields)
   }
-};
+}
 
 export default ReclassModelWizard;
 
