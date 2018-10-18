@@ -30,7 +30,6 @@ class TableRow extends Component {
 
   render() {
     let created = this.props.created_at;
-    let template = this.props.template;
     return (
       <tr>
         <td>{this.props.id}</td>
