@@ -3,8 +3,13 @@ import {Button} from 'reactstrap';
 
 
 class TableRow extends Component {
-  state = {};
-  created_at = '';
+    constructor(props) {
+      super(props);
+      this.state = {};
+      this.created_at = '';
+      this.id = null;
+      this.template = null;
+    }
 
   userLocale = (utc_time) => {
 
@@ -23,14 +28,6 @@ class TableRow extends Component {
     );
   };
 
-
-  toggleShowWizard = () => {
-    this.setState(prevState => ({
-      toggleShowWizard: !prevState.toggleShowWizard,
-    }));
-  };
-
-
   render() {
     let created = this.props.created_at;
     let template = this.props.template;
@@ -40,7 +37,13 @@ class TableRow extends Component {
         {/*TODO: transform to user local data*/}
         <td>{this.userLocale(created)}</td>
         <td>
-          <Button outline color="secondary" onClick={this.toggleShowWizard}>Generate Params</Button>
+          <Button
+            outline
+            color="secondary"
+            onClick={this.props.toggleShowWizard}
+          >
+            {'Generate Params'}
+          </Button>
         </td>
       </tr>
     )
