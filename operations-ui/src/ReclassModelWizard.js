@@ -1,21 +1,62 @@
 import React, {Component} from 'react';
-import {FormGroup, Label, Input, Col, Row} from 'reactstrap';
+import {FormGroup, Label, Input, Button, Row} from 'reactstrap';
 import cx from 'classnames';
 import StepZilla from 'react-stepzilla';
-
 import './ReclassModelWizard.css'
+import axios from "axios";
+
+const ReactDOM = require('react-dom');
 
 class ReclassModelWizard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.wizardStorage = {};
+  }
+
+  submitWizardData = () => {
+    console.log(this.wizardStorage);
+    let filledTemplate = JSON.stringify(this.wizardStorage);
+    axios.post('http://localhost:8001/api/v1/metadata/submit', this.wizardStorage)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
+  };
+
+  getStore() {
+    return this.wizardStorage;
+  }
+
+  updateStore(newValues) {
+    this.wizardStorage = {
+      ...this.wizardStorage,
+      ...newValues,
+    }
+  }
+
   render() {
     let activeTemplate = JSON.parse(this.props.activeTemplate);
     const steps = activeTemplate.general_params_action.map((action, index) => (
-      {name: `${action.label}`, component: <Step key={`step-${index}`} stepFields={action.fields} />}));
-
+      {
+        name: `${action.label}`,
+        component:
+          <Step
+            key={`step-${index}`}
+            stepFields={action.fields}
+            getStore={() => (this.getStore())}
+            updateStore={(u) => {this.updateStore(u)}}
+          />
+      }));
+    steps.push({name: 'Submit', component: <LastStep submitWizardData={() => this.submitWizardData()} key={'dummy'}/>});
     return (<div className='step-progress'>
         <StepZilla
           steps={steps}
-          nextButtonCls={'btn btn-prev btn-info pull-right'}
-          backButtonCls={'btn btn-next btn-info pull-left'}
+          stepsNavigation={false}
+          nextButtonCls={'btn btn-prev btn-outline-info pull-right outline'}
+          backButtonCls={'btn btn-next btn-outline-info pull-left'}
+          onStepChange={(step) => window.sessionStorage.setItem('step', step)}
+          preventEnterSubmission={true}
         />
       </div>
     )
@@ -26,27 +67,59 @@ class Step extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.getFormFields = this.getFormFields.bind(this);
     this.stepFields = [];
+
+    this.isValidated = this.isValidated.bind(this);
   }
 
-  getInput = (field) => {
+   isValidated() {
+    // TODO: Add real validation here
+
+     const userInput = this._grabUserInput();
+     this.props.updateStore({...userInput});
+
+     return true;
+   }
+
+  _grabUserInput() {
+    let inputValues = {};
+
+    Object.keys(this.refs).forEach((inputName) => {
+      let inputElement = ReactDOM.findDOMNode(this.refs[inputName]);
+      if (inputElement.type === 'checkbox') {
+        inputValues[inputName] = inputElement.checked;
+      } else {
+        inputValues[inputName] = inputElement.value.trim();
+      }
+    });
+    return inputValues;
+  }
+
+  getInputField = (field) => {
+    let commonParams =  {
+      name:`${field.name}`,
+      id: `${field.name}`,
+      ref: `${field.name}`,
+      bsSize: 'sm'
+
+    };
+
+    if (`${field.placeholder}` !== 'undefined') {
+      commonParams.placeholder = `${field.placeholder}`
+    }
     // TODO: Add validation to the IP field
     if (field.type === 'TEXT' || field.type === 'IP') {
       return (
         <Input
-          name={field.name}
-          id={field.name}
-          placeholder={field.placeholder}
+          {...commonParams}
           defaultValue={field.initial}
         />
       );
     } else if (field.type === 'CHOICE') {
       return (
         <Input
+          {...commonParams}
           type='select'
-          name={field.name}
-          id={field.name}
         >
           {field.choices.map((s) => (
             <option key={s[0]} value={s[0]}>{s[1]}</option>
@@ -56,11 +129,9 @@ class Step extends Component {
     } else if (field.type === 'LONG_TEXT') {
       return (
         <Input
+          {...commonParams}
           type="textarea"
-          name={field.name}
-          id={field.name}
-          placeholder={field.placeholder}
-          value={field.initial}
+          defaultValue={field.initial}
         />
       );
     }
@@ -75,36 +146,56 @@ class Step extends Component {
           key={field.name}
           className={cx({'d-none': field.hidden})}
         >
-          <Label check id={field.name}>
-            <Input
-              defaultChecked={field.initial ? true : false}
-              type='checkbox'
-            />
-            {field.label}
-          </Label>
+          <Input
+            defaultChecked={!!field.initial}
+            type='checkbox'
+            id={field.name}
+            ref={field.name}
+          />
+          <Label check for={field.name}>
+            {field.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
+              return word.toUpperCase()
+            })}
+           </Label>
         </FormGroup>
       )
     }
   };
 
-  getFormFields = (fields) => {
-    return (fields.map((f) => (
+  render() {
+    let fields = this.props.stepFields;
+    return fields.map((f) => (
       (f.type === 'BOOL') ? this.getCheckboxFormGroup(f) :
         <FormGroup
           key={f.name}
           className={cx({'d-none': f.hidden})}>
-          <Label id={f.name}>
+          <Label for={f.name}>
             {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
               return word.toUpperCase()
             })}
           </Label>
-          {this.getInput(f)}
+          {this.getInputField(f)}
         </FormGroup>
-    )))
-  };
+    ));
+  }
+}
 
-  render() {
-    return this.getFormFields(this.props.stepFields)
+class LastStep extends Component {
+  render () {
+    return (
+      <div className={'last-step-text'}>
+        <p> Now you can start model generation </p>
+        <Button
+          className={'wizard-submit'}
+          color='success'
+          type='submit'
+          size='lg'
+          onClick={this.props.submitWizardData}
+        >
+          Submit
+        </Button>
+      </div>
+    )
   }
 }
 
