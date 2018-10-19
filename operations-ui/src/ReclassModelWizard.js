@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FormGroup, Label, Input, Button, Row} from 'reactstrap';
+import {FormGroup, Label, Input, Button, Row, Col} from 'reactstrap';
 import cx from 'classnames';
 import StepZilla from 'react-stepzilla';
 import './ReclassModelWizard.css'
@@ -45,7 +45,9 @@ class ReclassModelWizard extends Component {
             key={`step-${index}`}
             stepFields={action.fields}
             getStore={() => (this.getStore())}
-            updateStore={(u) => {this.updateStore(u)}}
+            updateStore={(u) => {
+              this.updateStore(u)
+            }}
           />
       }));
     steps.push({name: 'Submit', component: <LastStep submitWizardData={() => this.submitWizardData()} key={'dummy'}/>});
@@ -55,7 +57,6 @@ class ReclassModelWizard extends Component {
           stepsNavigation={false}
           nextButtonCls={'btn btn-prev btn-outline-info pull-right outline'}
           backButtonCls={'btn btn-next btn-outline-info pull-left'}
-          onStepChange={(step) => window.sessionStorage.setItem('step', step)}
           preventEnterSubmission={true}
         />
       </div>
@@ -72,14 +73,14 @@ class Step extends Component {
     this.isValidated = this.isValidated.bind(this);
   }
 
-   isValidated() {
+  isValidated() {
     // TODO: Add real validation here
 
-     const userInput = this._grabUserInput();
-     this.props.updateStore({...userInput});
+    const userInput = this._grabUserInput();
+    this.props.updateStore({...userInput});
 
-     return true;
-   }
+    return true;
+  }
 
   _grabUserInput() {
     let inputValues = {};
@@ -96,8 +97,8 @@ class Step extends Component {
   }
 
   getInputField = (field) => {
-    let commonParams =  {
-      name:`${field.name}`,
+    let commonParams = {
+      name: `${field.name}`,
       id: `${field.name}`,
       ref: `${field.name}`,
       bsSize: 'sm'
@@ -156,32 +157,60 @@ class Step extends Component {
             {field.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
               return word.toUpperCase()
             })}
-           </Label>
+          </Label>
         </FormGroup>
       )
     }
   };
 
+  getFormGropsRow = (currentField, nextField) => {
+    return(
+      <Row form>
+        <Col md={6}>
+          {this.baseFormGroup(currentField)}
+        </Col>
+        <Col md={6}>
+          {this.baseFormGroup(nextField)}
+        </Col>
+      </Row>
+    )
+  };
+
+  baseFormGroup = (f) => {
+    return f.type === 'BOOL' ? this.getCheckboxFormGroup(f) : (
+      <FormGroup
+        key={f.name}
+        className={cx({'d-none': f.hidden})}>
+        <Label for={f.name}>
+          {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
+            return word.toUpperCase()
+          })}
+        </Label>
+        {this.getInputField(f)}
+      </FormGroup>
+    )
+  };
+
   render() {
     let fields = this.props.stepFields;
-    return fields.map((f) => (
-      (f.type === 'BOOL') ? this.getCheckboxFormGroup(f) :
-        <FormGroup
-          key={f.name}
-          className={cx({'d-none': f.hidden})}>
-          <Label for={f.name}>
-            {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
-              return word.toUpperCase()
-            })}
-          </Label>
-          {this.getInputField(f)}
-        </FormGroup>
-    ));
+    let newRow = true;
+    return fields.map((f, i) => {
+      if (f.width === 'half') {
+        if (newRow) {
+          newRow = false;
+          return this.getFormGropsRow(f, fields[i + 1]);
+        } else {
+          newRow = true;
+        }
+      } else {
+        return this.baseFormGroup(f);
+      }
+    });
   }
 }
 
 class LastStep extends Component {
-  render () {
+  render() {
     return (
       <div className={'last-step-text'}>
         <p> Now you can start model generation </p>
