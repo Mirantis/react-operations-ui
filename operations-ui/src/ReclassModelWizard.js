@@ -22,6 +22,7 @@ class ReclassModelWizard extends Component {
         console.log(res);
         console.log(res.data);
       });
+    this.props.toggleShowWizard(null)
   };
 
   getStore() {
@@ -73,16 +74,16 @@ class Step extends Component {
     this.isValidated = this.isValidated.bind(this);
   }
 
-  isValidated() {
+  isValidated = () => {
     // TODO: Add real validation here
 
     const userInput = this._grabUserInput();
     this.props.updateStore({...userInput});
 
     return true;
-  }
+  };
 
-  _grabUserInput() {
+  _grabUserInput = () => {
     let inputValues = {};
 
     Object.keys(this.refs).forEach((inputName) => {
@@ -94,7 +95,7 @@ class Step extends Component {
       }
     });
     return inputValues;
-  }
+  };
 
   getInputField = (field) => {
     let commonParams = {
@@ -167,16 +168,16 @@ class Step extends Component {
     return(
       <Row form>
         <Col md={6}>
-          {this.baseFormGroup(currentField)}
+          {this.getBaseFormGroup(currentField)}
         </Col>
         <Col md={6}>
-          {this.baseFormGroup(nextField)}
+          {this.getBaseFormGroup(nextField)}
         </Col>
       </Row>
     )
   };
 
-  baseFormGroup = (f) => {
+  getBaseFormGroup = (f) => {
     return f.type === 'BOOL' ? this.getCheckboxFormGroup(f) : (
       <FormGroup
         key={f.name}
@@ -203,7 +204,7 @@ class Step extends Component {
           newRow = true;
         }
       } else {
-        return this.baseFormGroup(f);
+        return this.getBaseFormGroup(f);
       }
     });
   }

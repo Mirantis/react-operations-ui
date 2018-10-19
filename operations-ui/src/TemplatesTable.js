@@ -34,7 +34,13 @@ class TemplatesTable extends Component {
     const current = this.state;
 
     return (
-      current.showWizard ? <ReclassModelWizard activeTemplate={this.activeTemplate}/> :
+      current.showWizard ?
+
+        <ReclassModelWizard
+          activeTemplate={this.activeTemplate}
+          toggleShowWizard={() => this.toggleShowWizard(null)}
+        /> :
+
         <Table striped bordered hover>
           <thead>
             <tr>
