@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {FormGroup, Label, Input, Button, Row, Col} from 'reactstrap';
+import cx from 'classnames';
 import StepZilla from 'react-stepzilla';
 import HelpIcon from './HelpIcon'
 import axios from "axios";
-import cx from 'classnames';
-import './ReclassModelWizard.css'
 
 const ReactDOM = require('react-dom');
 
