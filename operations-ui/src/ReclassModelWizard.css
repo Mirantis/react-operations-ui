@@ -96,21 +96,51 @@ ol.progtrckr li.progtrckr-done:hover:before {
   color: #333;
 }
 
+.form-check {
+  margin-bottom: 1rem;
+}
+
 .footer-buttons {
   margin-top: 20px;
   text-align: center;
 }
-.footer-buttons .btn-info {
+
+.footer-buttons .btn-outline-info {
   margin-right: 15px;
+  margin-bottom: 15px;
 }
 
 .step-progress {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .step-progress label {
   font-weight: 800;
   color: #404040;
+  font-size: 15px;
+}
+
+.step-progress input {
+  color: #545454;
+}
+.wizard-submit {
+  margin-right: 15px;
+}
+
+.last-step-text {
+  padding: 25px;
+  text-align: center;
+  background-color: #e9f6ec;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border-radius: 0.3rem
+}
+
+.last-step-text p {
+  font-size: 1.3rem;
+  color: #28a745;
+
 }
