@@ -1,0 +1,11 @@
+.help-message {
+ pointer-events: auto !important;
+ border-radius: 4px !important;
+ max-width: 400px;
+}
+
+.step-progress label .help-icon {
+  margin-left: 4px;
+  position: relative;
+  top: -2px;
+}
