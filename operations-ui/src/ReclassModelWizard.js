@@ -56,8 +56,8 @@ class ReclassModelWizard extends Component {
         <StepZilla
           steps={steps}
           stepsNavigation={false}
-          nextButtonCls={'btn btn-prev btn-outline-info pull-right outline'}
-          backButtonCls={'btn btn-next btn-outline-info pull-left'}
+          nextButtonCls={'btn btn-prev btn-outline-primary pull-right outline'}
+          backButtonCls={'btn btn-next btn-outline-primary pull-left'}
           preventEnterSubmission={true}
         />
       </div>

@@ -34,13 +34,18 @@ class TemplatesTable extends Component {
     const current = this.state;
 
     return (
-      current.showWizard ?
+      current.showWizard ? 
 
         <ReclassModelWizard
           activeTemplate={this.activeTemplate}
           toggleShowWizard={() => this.toggleShowWizard(null)}
         /> :
-
+        <div className={'content'}>
+          <div className={'page-header'}>
+            <h2>
+              UI Templates Table
+            </h2>
+          </div>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -61,6 +66,7 @@ class TemplatesTable extends Component {
           )}
           </tbody>
         </Table>
+        </div>
     );
   }
 }

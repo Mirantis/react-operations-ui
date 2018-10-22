@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactTooltip from 'react-tooltip'
 
-import './HelpIcon.css'
 class HelpIcon extends Component {
 
   render() {
