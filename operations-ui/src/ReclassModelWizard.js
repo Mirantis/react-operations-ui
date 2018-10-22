@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {FormGroup, Label, Input, Button, Row, Col} from 'reactstrap';
-import cx from 'classnames';
 import StepZilla from 'react-stepzilla';
-import './ReclassModelWizard.css'
+import HelpIcon from './HelpIcon'
 import axios from "axios";
+import cx from 'classnames';
+import './ReclassModelWizard.css'
 
 const ReactDOM = require('react-dom');
 
@@ -186,6 +187,7 @@ class Step extends Component {
           {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
             return word.toUpperCase()
           })}
+          <HelpIcon text={f.help_text}></HelpIcon>
         </Label>
         {this.getInputField(f)}
       </FormGroup>
