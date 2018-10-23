@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import axios from "axios";
 import {Table} from 'reactstrap';
 import TableRow from './TableRow';
 import ReclassModelWizard from './ReclassModelWizard';
-import axios from "axios";
+
 
 class TemplatesTable extends Component {
   constructor(props, context) {
@@ -10,7 +11,9 @@ class TemplatesTable extends Component {
 
     this.state = {
       templates: [],
-      showWizard: false
+      showWizard: false,
+      keycloak: null,
+      authenticated: false,
     };
     this.activeTemplate = null;
   }
@@ -23,27 +26,38 @@ class TemplatesTable extends Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8001/api/v1/modelform/templates', {responseType: 'json'})
-      .then(res => {
-        const templates = res.data;
-        this.setState({templates});
-      });
+      const AuthStr = 'Bearer '.concat(sessionStorage.getItem('kc_token'));
+      axios.get('http://localhost:8001/api/v1/modelform/templates',
+        {
+          headers: { Authorization: AuthStr },
+          responseType: 'json'
+        })
+        .then(
+          res => {
+            const templates = res.data;
+            this.setState({ templates });
+          })
+        .catch(
+          error => {
+            console.log(error.response)
+          }
+        );
   }
 
   render() {
     const current = this.state;
 
     return (
-      current.showWizard ? 
+      current.showWizard ?
 
         <ReclassModelWizard
           activeTemplate={this.activeTemplate}
           toggleShowWizard={() => this.toggleShowWizard(null)}
         /> :
-        <div className={'content'}>
+        <div className={'table-content'}>
           <div className={'page-header'}>
             <h2>
-              UI Templates Table
+              Templates Table
             </h2>
           </div>
         <Table striped bordered hover>

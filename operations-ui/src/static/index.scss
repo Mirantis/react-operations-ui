@@ -35,6 +35,7 @@ h1, h2 {
   margin-bottom: 0px;
   background-color: $mira-purple-dark;
   .navbar-header {
+    padding-left: 30px;
     img.mirantis-logo {
       padding: 3px;
       position: relative;
@@ -56,11 +57,12 @@ h1, h2 {
 //
 // *****************************************************************************
 
-.content {
-  margin-left: 50px;
-  margin-right: 50px;
+.table-content {
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 30px;
   margin-bottom: 30px;
+  width: 80%;
 }
 
 .page-header {
