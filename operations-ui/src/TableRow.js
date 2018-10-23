@@ -37,8 +37,7 @@ class TableRow extends Component {
         <td>{this.userLocale(created)}</td>
         <td>
           <Button
-            outline
-            color="secondary"
+            color="primary"
             onClick={this.props.toggleShowWizard}
           >
             {'Generate Params'}
