@@ -5,6 +5,7 @@ import ReclassModelWizard from './ReclassModelWizard';
 import TableRow from './TableRow';
 import TableManager from './TableManager';
 
+require('dotenv').config();
 
 class TemplatesTable extends Component {
   constructor(props, context) {
@@ -31,7 +32,7 @@ class TemplatesTable extends Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8001/api/v1/modelform/templates', this.requestHeader)
+    axios.get(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates`, this.requestHeader)
       .then(
         res => {
           const templates = res.data;
@@ -50,7 +51,7 @@ class TemplatesTable extends Component {
   };
 
   removeTemplate = (tId) => {
-    axios.delete('http://localhost:8001/api/v1/modelform/templates/' + tId, this.requestHeader)
+    axios.delete(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates/` + tId, this.requestHeader)
       .then(res => {
         return this.setState(prevState => (
           { templates: prevState.templates.filter((obj => (obj.id !== tId))) })
