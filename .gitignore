@@ -5,8 +5,8 @@
 .idea/
 
 # dependencies
-operations-ui/node_modules/
-operations-ui/package-lock.json
+node_modules/
+package-lock.json
 
 # testing
 /coverage
