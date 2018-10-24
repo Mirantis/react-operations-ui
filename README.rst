@@ -9,7 +9,6 @@ Install
 
 .. code-block:: bash
 
-    cd operations-ui
     npm install
 
 
