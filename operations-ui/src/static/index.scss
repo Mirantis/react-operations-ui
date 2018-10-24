@@ -27,6 +27,10 @@ h1, h2 {
   font-weight: 700;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 // *****************************************************************************
 // NavigationBar
 // *****************************************************************************
@@ -66,7 +70,7 @@ h1, h2 {
 }
 
 .page-header {
-margin-bottom: 30px;
+  margin-bottom: 30px;
   h2 {
     display: inline-block;
   }
@@ -75,23 +79,34 @@ margin-bottom: 30px;
   }
 }
 
-.btn-primary{
+.btn-primary {
   color: $gray-lighter;
   background-color: $brand-primary;
   border-color: $brand-primary;
   &:hover {
     background-color: darken($brand-primary, 10%);
-    border-color:  darken($brand-primary, 10%);
+    border-color: darken($brand-primary, 10%);
   }
 }
-.btn-outline-primary {
- @include bootstrap-btn($brand-primary, #fff,  $brand-primary, 'primary')
-}
 
+.btn-outline-primary {
+  @include bootstrap-btn($brand-primary, #fff, $brand-primary, 'primary')
+}
 
 .btn-success {
- @include bootstrap-btn($gray-lighter, $mira-teal,  $mira-teal, 'success')
+  @include bootstrap-btn($gray-lighter, $mira-teal, $mira-teal, 'success')
 }
+
+.delete-icon {
+  margin-left: 15px;
+  path {
+    fill: $mira-burgundy;
+    &:hover {
+      fill: lighten($mira-burgundy, 10%);
+    }
+  }
+}
+
 // *****************************************************************************
 //
 // Reclass Model Wizard

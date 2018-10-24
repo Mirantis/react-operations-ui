@@ -17,6 +17,10 @@ class TemplatesTable extends Component {
       authenticated: false,
     };
     this.activeTemplate = null;
+    this.requestHeader = {
+      headers: {Authorization: 'Bearer ' + sessionStorage.getItem('kc_token')},
+      responseType: 'json'
+    };
   }
 
   toggleShowWizard = (t) => {
@@ -27,12 +31,7 @@ class TemplatesTable extends Component {
   };
 
   componentDidMount() {
-    const authStr = 'Bearer '.concat(sessionStorage.getItem('kc_token'));
-    axios.get('http://localhost:8001/api/v1/modelform/templates',
-      {
-        headers: {Authorization: authStr},
-        responseType: 'json'
-      })
+    axios.get('http://localhost:8001/api/v1/modelform/templates', this.requestHeader)
       .then(
         res => {
           const templates = res.data;
@@ -44,24 +43,44 @@ class TemplatesTable extends Component {
         }
       );
   }
+
   addTemplate = (t) => {
     return this.setState(prevState => (
       { templates: prevState.templates.concat(t) }));
+  };
+
+  removeTemplate = (tId) => {
+    axios.delete('http://localhost:8001/api/v1/modelform/templates/' + tId, this.requestHeader)
+      .then(res => {
+        return this.setState(prevState => (
+          { templates: prevState.templates.filter((obj => (obj.id !== tId))) })
+        )
+      })
+      .catch(error => {
+        console.log(error.response)
+      });
   };
 
   render() {
     const current = this.state;
 
     return (
-      current.showWizard ?
-
+      current.showWizard ? (
         <ReclassModelWizard
           activeTemplate={this.activeTemplate}
           toggleShowWizard={() => this.toggleShowWizard(null)}
-        /> :
+        />
+        ) : (
         <div className={'table-content'}>
-          <TableManager addTemplate={this.addTemplate}/>
-          <Table striped bordered hover>
+          <TableManager
+            addTemplate={this.addTemplate}
+            requestHeader={this.requestHeader}
+          />
+          <Table
+            striped
+            bordered
+            hover
+          >
             <thead>
             <tr>
               <th>ID</th>
@@ -74,14 +93,16 @@ class TemplatesTable extends Component {
                 <TableRow
                   key={item.id}
                   id={item.id}
-                  created_at={item.created_at}
+                  createdAt={item.created_at}
                   template={item.template}
-                  toggleShowWizard={() => this.toggleShowWizard(item.template)}/>
-              )
-            )}
+                  toggleShowWizard={() => this.toggleShowWizard(item.template)}
+                  removeTemplate={() => this.removeTemplate(item.id)}
+                />
+            ))}
             </tbody>
           </Table>
         </div>
+      )
     );
   }
 }

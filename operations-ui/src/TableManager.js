@@ -7,21 +7,13 @@ import React from "react";
 class TableManager extends Component {
 
   addTemplate = () => {
-    const authStr = 'Bearer '.concat(sessionStorage.getItem('kc_token'));
-    axios.post('http://localhost:8001/api/v1/modelform/templates',
-      {
-        headers: {Authorization: authStr},
-        responseType: 'json'
+    axios.post('http://localhost:8001/api/v1/modelform/templates', this.props.requestHeader)
+      .then(res => {
+        return this.props.addTemplate(res.data);
       })
-      .then(
-        res => {
-          return this.props.addTemplate(res.data);
-        })
-      .catch(
-        error => {
-          console.log(error.response)
-        }
-      );
+      .catch(error => {
+        console.log(error.response)
+      });
   };
 
   render() {
@@ -34,7 +26,7 @@ class TableManager extends Component {
           color='success'
           onClick={this.addTemplate}
         >
-          Add Template
+          {'Add Template'}
         </Button>
       </div>
     )
