@@ -62,11 +62,17 @@ h1, h2 {
   margin-right: auto;
   margin-top: 30px;
   margin-bottom: 30px;
-  width: 80%;
+  width: 70%;
 }
 
 .page-header {
 margin-bottom: 30px;
+  h2 {
+    display: inline-block;
+  }
+  button {
+    float: right;
+  }
 }
 
 .btn-primary{
