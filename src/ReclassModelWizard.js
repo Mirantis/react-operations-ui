@@ -16,7 +16,6 @@ class ReclassModelWizard extends Component {
 
   submitWizardData = () => {
     console.log(this.wizardStorage);
-    let filledTemplate = JSON.stringify(this.wizardStorage);
     axios.post('http://localhost:8001/api/v1/metadata/submit', this.wizardStorage)
       .then(res => {
         console.log(res);
@@ -204,9 +203,8 @@ class Step extends Component {
         } else {
           newRow = true;
         }
-      } else {
-        return this.getBaseFormGroup(f);
       }
+      return this.getBaseFormGroup(f);
     });
   }
 }
