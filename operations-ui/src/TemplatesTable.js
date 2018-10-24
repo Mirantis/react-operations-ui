@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Table} from 'reactstrap';
-import TableRow from './TableRow';
 import ReclassModelWizard from './ReclassModelWizard';
+import TableRow from './TableRow';
+import TableManager from './TableManager';
 
 
 class TemplatesTable extends Component {
@@ -16,6 +17,10 @@ class TemplatesTable extends Component {
       authenticated: false,
     };
     this.activeTemplate = null;
+    this.requestHeader = {
+      headers: {Authorization: 'Bearer ' + sessionStorage.getItem('kc_token')},
+      responseType: 'json'
+    };
   }
 
   toggleShowWizard = (t) => {
@@ -26,61 +31,78 @@ class TemplatesTable extends Component {
   };
 
   componentDidMount() {
-      const AuthStr = 'Bearer '.concat(sessionStorage.getItem('kc_token'));
-      axios.get('http://localhost:8001/api/v1/modelform/templates',
-        {
-          headers: { Authorization: AuthStr },
-          responseType: 'json'
+    axios.get('http://localhost:8001/api/v1/modelform/templates', this.requestHeader)
+      .then(
+        res => {
+          const templates = res.data;
+          this.setState({templates});
         })
-        .then(
-          res => {
-            const templates = res.data;
-            this.setState({ templates });
-          })
-        .catch(
-          error => {
-            console.log(error.response)
-          }
-        );
+      .catch(
+        error => {
+          console.log(error.response)
+        }
+      );
   }
+
+  addTemplate = (t) => {
+    return this.setState(prevState => (
+      { templates: prevState.templates.concat(t) }));
+  };
+
+  removeTemplate = (tId) => {
+    axios.delete('http://localhost:8001/api/v1/modelform/templates/' + tId, this.requestHeader)
+      .then(res => {
+        return this.setState(prevState => (
+          { templates: prevState.templates.filter((obj => (obj.id !== tId))) })
+        )
+      })
+      .catch(error => {
+        console.log(error.response)
+      });
+  };
 
   render() {
     const current = this.state;
 
     return (
-      current.showWizard ?
-
+      current.showWizard ? (
         <ReclassModelWizard
           activeTemplate={this.activeTemplate}
           toggleShowWizard={() => this.toggleShowWizard(null)}
-        /> :
+        />
+        ) : (
         <div className={'table-content'}>
-          <div className={'page-header'}>
-            <h2>
-              Templates Table
-            </h2>
-          </div>
-        <Table striped bordered hover>
-          <thead>
+          <TableManager
+            addTemplate={this.addTemplate}
+            requestHeader={this.requestHeader}
+          />
+          <Table
+            striped
+            bordered
+            hover
+          >
+            <thead>
             <tr>
               <th>ID</th>
               <th>Created</th>
               <th>Actions</th>
             </tr>
-          </thead>
-          <tbody>
-          {current.templates.map((item) => (
-              <TableRow
-                key={item.id}
-                id={item.id}
-                created_at={item.created_at}
-                template={item.template}
-                toggleShowWizard={() => this.toggleShowWizard(item.template)}/>
-            )
-          )}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+            {current.templates.map((item) => (
+                <TableRow
+                  key={item.id}
+                  id={item.id}
+                  createdAt={item.created_at}
+                  template={item.template}
+                  toggleShowWizard={() => this.toggleShowWizard(item.template)}
+                  removeTemplate={() => this.removeTemplate(item.id)}
+                />
+            ))}
+            </tbody>
+          </Table>
         </div>
+      )
     );
   }
 }

@@ -6,42 +6,39 @@ class TableRow extends Component {
     constructor(props) {
       super(props);
       this.state = {};
-      this.created_at = '';
+      this.createdAt = '';
       this.id = null;
       this.template = null;
     }
 
-  userLocale = (utc_time) => {
-
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    utc_time = new Date(utc_time);
-    let trailingZero = (number) => number < 10 ? '0' + number : number;
-    return (
-      `${months[utc_time.getMonth()]} ` +
-      `${utc_time.getDate()}, ` +
-      `${utc_time.getFullYear()}, ` +
-      `${utc_time.getHours()}:` +
-      `${trailingZero(utc_time.getMinutes())}:` +
-      `${trailingZero(utc_time.getSeconds())}`
-    );
+  userLocale = (utcTime) => {
+    utcTime = new Date(utcTime);
+    return utcTime.toString().split(' ').slice(1, -4).join(' ');
   };
 
   render() {
-    let created = this.props.created_at;
+    let created = this.props.createdAt;
     return (
       <tr>
         <td>{this.props.id}</td>
-        {/*TODO: transform to user local data*/}
         <td>{this.userLocale(created)}</td>
         <td>
           <Button
-            color="primary"
+            color='primary'
+            size='small'
             onClick={this.props.toggleShowWizard}
           >
             {'Generate Params'}
           </Button>
+          <svg
+            className='clickable delete-icon'
+            viewBox='0 0 24 24'
+            width='24'
+            height='24'
+            onClick={this.props.removeTemplate}
+          >
+            <path d='M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z' />
+          </svg>
         </td>
       </tr>
     )
