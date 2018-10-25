@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {FormGroup, Label, Input, Button, Row, Col} from 'reactstrap';
-import cx from 'classnames';
+import {Button} from 'reactstrap';
 import StepZilla from 'react-stepzilla';
-import HelpIcon from './HelpIcon'
 import axios from "axios";
+import FieldList from "./FieldList";
 
 const ReactDOM = require('react-dom');
 
@@ -69,9 +68,17 @@ class Step extends Component {
     super(props);
     this.state = {};
     this.stepFields = [];
-
+    this.inputDataRefs = {};
     this.isValidated = this.isValidated.bind(this);
   }
+
+  getRefsFromChild = (fieldListRefs) => {
+    if (this.inputDataRefs) {
+      Object.assign(this.inputDataRefs, fieldListRefs)
+    } else {
+      this.inputDataRefs = fieldListRefs
+    }
+  };
 
   isValidated = () => {
     // TODO: Add real validation here
@@ -85,8 +92,8 @@ class Step extends Component {
   _grabUserInput = () => {
     let inputValues = {};
 
-    Object.keys(this.refs).forEach((inputName) => {
-      let inputElement = ReactDOM.findDOMNode(this.refs[inputName]);
+    Object.keys(this.inputDataRefs).forEach((inputName) => {
+      let inputElement = ReactDOM.findDOMNode(this.inputDataRefs[inputName]);
       if (inputElement.type === 'checkbox') {
         inputValues[inputName] = inputElement.checked;
       } else {
@@ -96,116 +103,12 @@ class Step extends Component {
     return inputValues;
   };
 
-  getInputField = (field) => {
-    let commonParams = {
-      name: `${field.name}`,
-      id: `${field.name}`,
-      ref: `${field.name}`,
-      bsSize: 'sm'
-
-    };
-
-    if (`${field.placeholder}` !== 'undefined') {
-      commonParams.placeholder = `${field.placeholder}`
-    }
-    // TODO: Add validation to the IP field
-    if (field.type === 'TEXT' || field.type === 'IP') {
-      return (
-        <Input
-          {...commonParams}
-          defaultValue={field.initial}
-        />
-      );
-    } else if (field.type === 'CHOICE') {
-      return (
-        <Input
-          {...commonParams}
-          type='select'
-        >
-          {field.choices.map((s) => (
-            <option key={s[0]} value={s[0]}>{s[1]}</option>
-          ))}
-        </Input>
-      );
-    } else if (field.type === 'LONG_TEXT') {
-      return (
-        <Input
-          {...commonParams}
-          type="textarea"
-          defaultValue={field.initial}
-        />
-      );
-    }
-  };
-
-  getCheckboxFormGroup = (field) => {
-    // There are no such fields at mm.mcp.mirantis.net
-    if (field.label) {
-      return (
-        <FormGroup
-          check
-          key={field.name}
-          className={cx({'d-none': field.hidden})}
-        >
-          <Input
-            defaultChecked={!!field.initial}
-            type='checkbox'
-            id={field.name}
-            ref={field.name}
-          />
-          <Label check for={field.name}>
-            {field.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
-              return word.toUpperCase()
-            })}
-          </Label>
-        </FormGroup>
-      )
-    }
-  };
-
-  getFormGropsRow = (currentField, nextField) => {
-    return(
-      <Row form>
-        <Col md={6}>
-          {this.getBaseFormGroup(currentField)}
-        </Col>
-        <Col md={6}>
-          {this.getBaseFormGroup(nextField)}
-        </Col>
-      </Row>
-    )
-  };
-
-  getBaseFormGroup = (f) => {
-    return f.type === 'BOOL' ? this.getCheckboxFormGroup(f) : (
-      <FormGroup
-        key={f.name}
-        className={cx({'d-none': f.hidden})}>
-        <Label for={f.name}>
-          {f.name.replace(/_/g, ' ').replace(/\b\w/g, (word) => {
-            return word.toUpperCase()
-          })}
-          <HelpIcon text={f.help_text}></HelpIcon>
-        </Label>
-        {this.getInputField(f)}
-      </FormGroup>
-    )
-  };
-
   render() {
     let fields = this.props.stepFields;
-    let newRow = true;
-    return fields.map((f, i) => {
-      if (f.width === 'half') {
-        if (newRow) {
-          newRow = false;
-          return this.getFormGropsRow(f, fields[i + 1]);
-        } else {
-          newRow = true;
-        }
-      }
-      return this.getBaseFormGroup(f);
-    });
+    return <FieldList
+      fields={fields}
+      passInputData={this.getRefsFromChild}
+    />
   }
 }
 
