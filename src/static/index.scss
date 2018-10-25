@@ -49,15 +49,15 @@ h1, h2 {
   .navbar-header {
     padding-left: 30px;
     img.mirantis-logo {
-      padding: 3px;
       position: relative;
-      top: -15px;
-      width: 140px;
+      top: -8px;
+      width: 200px;
     }
     h1 {
       display: inline-block;
-      padding-left: 30px;
+      padding-left: 20px;
       color: $gray-lighter;
+      font-size: 35px;;
     }
   }
 
