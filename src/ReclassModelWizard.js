@@ -20,7 +20,7 @@ class ReclassModelWizard extends Component {
         console.log(res);
         console.log(res.data);
       });
-    this.props.toggleShowWizard(null)
+    this.props.toggleTemplateAdding(null)
   };
 
   getStore() {

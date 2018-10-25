@@ -12,7 +12,7 @@ class TemplatesTable extends Component {
 
     this.state = {
       templates: [],
-      showWizard: false,
+      showAddTemplateForm: false,
       keycloak: null,
       authenticated: false,
     };
@@ -23,11 +23,18 @@ class TemplatesTable extends Component {
     };
   }
 
-  toggleShowWizard = (t) => {
-    this.activeTemplate = t;
+  toggleTemplateAdding = (item) => {
+    if (item) {
+      this.activeTemplate = item.template;
+      this.setState(prevState => (
+        {templates: prevState.templates.concat(item)}));
+    }
     this.setState(prevState => ({
-      showWizard: !prevState.showWizard,
+      showAddTemplateForm: !prevState.showAddTemplateForm,
     }));
+
+    // this.setState(prevState => (
+    //   { templates: prevState.templates.concat(item) }));
   };
 
   componentDidMount() {
@@ -45,7 +52,7 @@ class TemplatesTable extends Component {
   }
 
   addTemplate = (t) => {
-    return this.setState(prevState => (
+     return this.setState(prevState => (
       { templates: prevState.templates.concat(t) }));
   };
 
@@ -65,16 +72,16 @@ class TemplatesTable extends Component {
     const current = this.state;
 
     return (
-      current.showWizard ? (
+      current.showAddTemplateForm ? (
         //<ReclassModelWizard
         <ReclassTemplateForm
           activeTemplate={this.activeTemplate}
-          toggleShowWizard={() => this.toggleShowWizard(null)}
+          toggleTemplateAdding={() => this.toggleTemplateAdding(null)}
         />
         ) : (
         <div className={'table-content'}>
           <TableManager
-            addTemplate={this.addTemplate}
+            toggleTemplateAdding={this.toggleTemplateAdding}
             requestHeader={this.requestHeader}
           />
           <Table
@@ -96,7 +103,7 @@ class TemplatesTable extends Component {
                   id={item.id}
                   createdAt={item.created_at}
                   template={item.template}
-                  toggleShowWizard={() => this.toggleShowWizard(item.template)}
+                  // toggleTemplateAdding={() => this.toggleTemplateAdding(item.template)}
                   removeTemplate={() => this.removeTemplate(item.id)}
                 />
             ))}

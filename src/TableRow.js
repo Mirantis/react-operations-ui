@@ -23,13 +23,13 @@ class TableRow extends Component {
         <td>{this.props.id}</td>
         <td>{this.userLocale(created)}</td>
         <td>
-          <Button
-            color='primary'
-            size='small'
-            onClick={this.props.toggleShowWizard}
-          >
-            {'Generate Params'}
-          </Button>
+          {/*<Button*/}
+            {/*color='primary'*/}
+            {/*size='small'*/}
+            {/*onClick={this.props.toggleTemplateAdding}*/}
+          {/*>*/}
+            {/*{'Generate Params'}*/}
+          {/*</Button>*/}
           <svg
             className='clickable delete-icon'
             viewBox='0 0 24 24'

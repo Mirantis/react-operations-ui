@@ -79,7 +79,10 @@ class FieldList extends Component {
 
   getFormGropsRow = (currentField, nextField) => {
     return (
-      <Row form>
+      <Row
+        key={currentField.name}
+        form
+      >
         <Col md={6}>
           {this.getBaseFormGroup(currentField)}
         </Col>
