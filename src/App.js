@@ -47,7 +47,7 @@ class App extends Component {
       <div>
         <NavigationBar />
         {isAuthenticated ? (
-          <div id={'content'}>
+          <div className={'container'}>
             <TemplatesTable/>
           </div>
         ) : null

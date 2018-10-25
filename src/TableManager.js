@@ -9,7 +9,7 @@ class TableManager extends Component {
   addTemplate = () => {
     axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates`, this.props.requestHeader)
       .then(res => {
-        return this.props.addTemplate(res.data);
+        return this.props.toggleTemplateAdding(res.data);
       })
       .catch(error => {
         console.log(error.response)
