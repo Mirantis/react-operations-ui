@@ -15,7 +15,6 @@ class App extends Component {
     }
    }
   componentDidMount() {
-      console.log(process.env);
     const keycloak = Keycloak({
       url: `${process.env.REACT_APP_KEYCLOAK_AUTH_URL}`,
       realm: `${process.env.REACT_APP_KEYCLOAK_REALM}`,
