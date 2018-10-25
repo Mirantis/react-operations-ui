@@ -105,10 +105,14 @@ class Step extends Component {
 
   render() {
     let fields = this.props.stepFields;
-    return <FieldList
-      fields={fields}
-      passInputData={this.getRefsFromChild}
-    />
+    return (
+      <div className='template-form'>
+        <FieldList
+          fields={fields}
+          passInputData={this.getRefsFromChild}
+        />
+      </div>
+    )
   }
 }
 

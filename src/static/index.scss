@@ -31,6 +31,14 @@ h1, h2 {
   cursor: pointer;
 }
 
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width:80%;
+
+}
 // *****************************************************************************
 // NavigationBar
 // *****************************************************************************
@@ -60,14 +68,6 @@ h1, h2 {
 // Templates Table
 //
 // *****************************************************************************
-
-.table-content {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  width: 70%;
-}
 
 .page-header {
   margin-bottom: 30px;
@@ -223,10 +223,7 @@ ol.progtrckr {
   }
 }
 
-.step-progress {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
+.template-form {
   label {
     font-weight: 800;
     color: #404040;
@@ -243,7 +240,9 @@ ol.progtrckr {
 }
 
 .wizard-submit {
-  margin-right: 15px;
+  display: inherit;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .last-step-text {

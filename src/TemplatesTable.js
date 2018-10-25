@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Table} from 'reactstrap';
-import ReclassModelWizard from './ReclassModelWizard';
 import TableRow from './TableRow';
 import TableManager from './TableManager';
 import ReclassTemplateForm from "./ReclassTemplateForm";
@@ -67,8 +66,8 @@ class TemplatesTable extends Component {
 
     return (
       current.showWizard ? (
-        <ReclassModelWizard
-        //<ReclassTemplateForm
+        //<ReclassModelWizard
+        <ReclassTemplateForm
           activeTemplate={this.activeTemplate}
           toggleShowWizard={() => this.toggleShowWizard(null)}
         />

@@ -5,10 +5,6 @@ import cx from "classnames";
 
 
 class FieldList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     // pass the requested ref here
     this.props.passInputData(this.refs);
