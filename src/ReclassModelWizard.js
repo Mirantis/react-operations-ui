@@ -16,7 +16,7 @@ class ReclassModelWizard extends Component {
 
   submitWizardData = () => {
     console.log(this.wizardStorage);
-    axios.post('http://localhost:8001/api/v1/metadata/submit', this.wizardStorage)
+    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/metadata/submit`, this.wizardStorage)
       .then(res => {
         console.log(res);
         console.log(res.data);

@@ -7,7 +7,7 @@ import React from "react";
 class TableManager extends Component {
 
   addTemplate = () => {
-    axios.post('http://localhost:8001/api/v1/modelform/templates', this.props.requestHeader)
+    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates`, this.props.requestHeader)
       .then(res => {
         return this.props.addTemplate(res.data);
       })

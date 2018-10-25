@@ -6,8 +6,7 @@ ENV NPM_CONFIG_LOGLEVEL warn
 
 # Install and configure `serve`.
 RUN npm install -g serve
-CMD serve -p 3000 -s build
-EXPOSE 3000
+CMD serve -p ${REACT_APP_PORT} -s build
 
 # Install all dependencies of the current project.
 COPY package.json package.json

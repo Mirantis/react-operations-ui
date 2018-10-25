@@ -4,6 +4,7 @@ import TemplatesTable from "./TemplatesTable";
 import axios from "axios";
 import Keycloak from "keycloak-js";
 
+
 class App extends Component {
    constructor(props, context) {
     super(props, context);
@@ -22,7 +23,6 @@ class App extends Component {
         sessionStorage.setItem('kc_token', keycloak.token);
         sessionStorage.setItem('kc_refreshToken', keycloak.refreshToken);
         this.setState({authenticated: authenticated})
-        // sessionStorage.setItem('authenticated', authenticated);
       }
 
     });
