@@ -12,7 +12,8 @@ class TableManager extends Component {
         return this.props.toggleTemplateAdding(res.data);
       })
       .catch(error => {
-        console.log(error.response)
+        console.log(error.response);
+        return this.props.toggleTemplateAdding(null);
       });
   };
 

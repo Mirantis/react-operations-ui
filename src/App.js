@@ -4,6 +4,7 @@ import TemplatesTable from "./TemplatesTable";
 import axios from "axios";
 import Keycloak from "keycloak-js";
 
+require('dotenv').config();
 
 class App extends Component {
    constructor(props, context) {
@@ -14,7 +15,12 @@ class App extends Component {
     }
    }
   componentDidMount() {
-    const keycloak = Keycloak('/keycloak.json');
+      console.log(process.env);
+    const keycloak = Keycloak({
+      url: `${process.env.REACT_APP_KEYCLOAK_AUTH_URL}`,
+      realm: `${process.env.REACT_APP_KEYCLOAK_REALM}`,
+      clientId: `${process.env.REACT_APP_KEYCLOAK_CLIENT_ID}`
+    });
 
     keycloak.init(
       {onLoad: 'login-required'}
