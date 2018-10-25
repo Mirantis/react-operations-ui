@@ -23,7 +23,7 @@ class TableManager extends Component {
           Templates Table
         </h2>
         <Button
-          color='success'
+          color='primary'
           onClick={this.addTemplate}
         >
           {'Add Template'}
