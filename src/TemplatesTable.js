@@ -34,8 +34,6 @@ class TemplatesTable extends Component {
       showAddTemplateForm: !prevState.showAddTemplateForm,
     }));
 
-    // this.setState(prevState => (
-    //   { templates: prevState.templates.concat(item) }));
   };
 
   componentDidMount() {
@@ -51,11 +49,6 @@ class TemplatesTable extends Component {
         }
       );
   }
-
-  addTemplate = (t) => {
-     return this.setState(prevState => (
-      { templates: prevState.templates.concat(t) }));
-  };
 
   removeTemplate = (tId) => {
     axios.delete(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates/` + tId, this.requestHeader)
@@ -104,7 +97,6 @@ class TemplatesTable extends Component {
                   id={item.id}
                   createdAt={item.created_at}
                   template={item.template}
-                  // toggleTemplateAdding={() => this.toggleTemplateAdding(item.template)}
                   removeTemplate={() => this.removeTemplate(item.id)}
                 />
             ))}
