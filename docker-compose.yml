@@ -1,10 +1,7 @@
 version: '3.2'
 services:
   operations-ui:
-    env_file: .env
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mirantis/operations-ui:latest
     ports:
       - $REACT_APP_PORT:3000
     environment:
