@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import NavigationBar from "./NavigationBar";
 import TemplatesTable from "./TemplatesTable";
 import axios from "axios";
@@ -7,20 +7,24 @@ import Keycloak from "keycloak-js";
 require('dotenv').config();
 
 class App extends Component {
-   constructor(props, context) {
+  constructor(props, context) {
     super(props, context);
 
     this.state = {
-      authenticated: false
+      authenticated: false,
     }
-   }
-  componentDidMount() {
-    const keycloak = Keycloak({
-      url: `${process.env.REACT_APP_KEYCLOAK_AUTH_URL}`,
-      realm: `${process.env.REACT_APP_KEYCLOAK_REALM}`,
-      clientId: `${process.env.REACT_APP_KEYCLOAK_CLIENT_ID}`
-    });
+  }
 
+  componentDidMount() {
+    const authUrl = `${process.env.REACT_APP_KEYCLOAK_AUTH_URL}`;
+    const realm = `${process.env.REACT_APP_KEYCLOAK_REALM}`;
+    const clientId = `${process.env.REACT_APP_KEYCLOAK_CLIENT_ID}`;
+
+    const keycloak = Keycloak({
+      url: authUrl,
+      realm: realm,
+      clientId: clientId
+    });
     keycloak.init(
       {onLoad: 'login-required'}
     ).then(authenticated => {
@@ -29,7 +33,6 @@ class App extends Component {
         sessionStorage.setItem('kc_refreshToken', keycloak.refreshToken);
         this.setState({authenticated: authenticated})
       }
-
     });
     axios.interceptors.request.use(config => (
       keycloak.updateToken(5)
@@ -46,17 +49,14 @@ class App extends Component {
         })
     ));
   }
+
   render() {
-    let isAuthenticated = this.state.authenticated;
-     return (
+    return (
       <div>
-        <NavigationBar />
-        {isAuthenticated ? (
+        <NavigationBar/>
           <div className={'container'}>
             <TemplatesTable/>
           </div>
-        ) : null
-        }
       </div>
     );
   }
