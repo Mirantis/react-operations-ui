@@ -72,15 +72,11 @@ class TemplatesTable extends Component {
 
     return (
       current.showError ? (
-              <tr>
-                <td colSpan='3'>
-                  <ErrorHolder
-                    errorName={'Operations API unavailable'}
-                    errorDetails={this.state.errMessage}
-                  />
-                </td>
-              </tr>
-            ) : (
+        <ErrorHolder
+          errorName={'Operations API unavailable'}
+          errorDetails={this.state.errMessage}
+        />
+      ) : (
       current.showAddTemplateForm ? (
         //<ReclassModelWizard
         <ReclassTemplateForm
