@@ -71,6 +71,12 @@ class TemplatesTable extends Component {
     const current = this.state;
 
     return (
+      current.showError ? (
+        <ErrorHolder
+          errorName={'Operations API unavailable'}
+          errorDetails={this.state.errMessage}
+        />
+      ) : (
       current.showAddTemplateForm ? (
         //<ReclassModelWizard
         <ReclassTemplateForm
@@ -96,17 +102,8 @@ class TemplatesTable extends Component {
             </tr>
             </thead>
             <tbody>
-            {current.showError ? (
-              <tr>
-                <td colSpan='3'>
-                  <ErrorHolder
-                    errorName={'Operations API unavailable'}
-                    errorDetails={this.state.errMessage}
-                  />
-                </td>
-              </tr>
-            ) : (
-              current.templates.map((item) => (
+
+            {current.templates.map((item) => (
                 <TableRow
                   key={item.id}
                   id={item.id}
@@ -114,12 +111,12 @@ class TemplatesTable extends Component {
                   template={item.template}
                   removeTemplate={() => this.removeTemplate(item.id)}
                 />
-              ))
+              )
             )}
             </tbody>
           </Table>
         </div>
-      )
+      ))
     );
   }
 }
