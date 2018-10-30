@@ -39,6 +39,16 @@ h1, h2 {
   width:80%;
 
 }
+.alert-holder {
+  margin: 40px;
+}
+
+.alert-dander {
+  color: $mira-burgundy;
+  background-color: $mira-red;
+  border-color: darken($mira-red, 10%);
+}
+
 // *****************************************************************************
 // NavigationBar
 // *****************************************************************************

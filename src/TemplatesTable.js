@@ -4,6 +4,7 @@ import {Table} from 'reactstrap';
 import TableRow from './TableRow';
 import TableManager from './TableManager';
 import ReclassTemplateForm from "./ReclassTemplateForm";
+import ErrorHolder from "./ErrorHolder";
 
 require('dotenv').config();
 
@@ -16,6 +17,8 @@ class TemplatesTable extends Component {
       showAddTemplateForm: false,
       keycloak: null,
       authenticated: false,
+      errMessage: '',
+      showError: false,
     };
     this.activeTemplate = null;
     this.requestHeader = {
@@ -45,7 +48,9 @@ class TemplatesTable extends Component {
         })
       .catch(
         error => {
-          console.log(error.response)
+          console.log(error.response);
+          this.setState({errMessage: error.message});
+          this.setState({showError: true});
         }
       );
   }
@@ -72,7 +77,7 @@ class TemplatesTable extends Component {
           activeTemplate={this.activeTemplate}
           toggleTemplateAdding={() => this.toggleTemplateAdding(null)}
         />
-        ) : (
+      ) : (
         <div className={'table-content'}>
           <TableManager
             toggleTemplateAdding={this.toggleTemplateAdding}
@@ -91,7 +96,17 @@ class TemplatesTable extends Component {
             </tr>
             </thead>
             <tbody>
-            {current.templates.map((item) => (
+            {current.showError ? (
+              <tr>
+                <td colSpan='3'>
+                  <ErrorHolder
+                    errorName={'Operations API unavailable'}
+                    errorDetails={this.state.errMessage}
+                  />
+                </td>
+              </tr>
+            ) : (
+              current.templates.map((item) => (
                 <TableRow
                   key={item.id}
                   id={item.id}
@@ -99,7 +114,8 @@ class TemplatesTable extends Component {
                   template={item.template}
                   removeTemplate={() => this.removeTemplate(item.id)}
                 />
-            ))}
+              ))
+            )}
             </tbody>
           </Table>
         </div>
