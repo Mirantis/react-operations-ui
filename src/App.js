@@ -51,13 +51,20 @@ class App extends Component {
   }
 
   render() {
-    return (
+    let isAuthenticated = this.state.authenticated;
+     return (
+        isAuthenticated ? (  
       <div>
-        <NavigationBar/>
+        <NavigationBar />
+
           <div className={'container'}>
             <TemplatesTable/>
           </div>
+
+
       </div>
+            ) : null
+
     );
   }
 }
