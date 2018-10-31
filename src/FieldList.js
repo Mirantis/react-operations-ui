@@ -54,8 +54,6 @@ class FieldList extends Component {
   };
 
   getCheckboxFormGroup = (field) => {
-    // There are no such fields at mm.mcp.mirantis.net
-
       return (
         <FormGroup
           check
@@ -115,18 +113,18 @@ class FieldList extends Component {
   render() {
     const fields = this.props.fields;
 
-    // let newRow = true;
+    let newRow = true;
 
     const formFields = fields.map((f, i) => {
-      // if (f.width === 'half') {
-      //   if (newRow) {
-      //     newRow = false;
-      //     return this.getFormGropsRow(f, fields[i + 1]);
-      //   } else {
-      //     newRow = true;
-      //     return null;
-      //   }
-      // }
+      if (f.width === 'half') {
+        if (newRow) {
+          newRow = false;
+          return this.getFormGropsRow(f, fields[i + 1]);
+        } else {
+          newRow = true;
+          return null;
+        }
+      }
       return this.getBaseFormGroup(f);
     });
 
