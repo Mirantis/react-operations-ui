@@ -49,6 +49,47 @@ h1, h2 {
   border-color: darken($mira-red, 10%);
 }
 
+
+// *****************************************************************************
+// Template build loading
+// *****************************************************************************
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loading-icon {
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 0.25rem solid #ddd;
+  border-top-color: $mira-purple-dark;
+  display: inline-block;
+  margin: 0 3px;
+  @include prefix(animation-name, spin, webkit moz o);
+  @include prefix(animation-duration, 1s, webkit moz o);
+  @include prefix(animation-iteration-count, infinite, webkit moz o);
+  @include prefix(animation-timing-function, cubic-bezier(0.5, -0.35, 0.5, 1.35), webkit moz o);
+}
+
 // *****************************************************************************
 // NavigationBar
 // *****************************************************************************
@@ -109,6 +150,8 @@ h1, h2 {
 
 .delete-icon {
   margin-left: 15px;
+  position: relative;
+  top: -5px;
   path {
     fill: $mira-burgundy;
     &:hover {
@@ -201,9 +244,12 @@ ol.progtrckr {
   }
 }
 
+.tooltip-box {
+   border-radius: 4px !important;
+}
+
 .help-message {
   pointer-events: auto !important;
-  border-radius: 4px !important;
   max-width: 400px;
 }
 
