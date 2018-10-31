@@ -23,7 +23,7 @@ class ReclassTemplateForm extends Component {
       }
     });
     console.log(inputValues);
-    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/submit`, {
+    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/submit/`, {
       headers: {'Content-Type': 'application/json'},
       data: this.wizardStorage
     }).then(res => {
