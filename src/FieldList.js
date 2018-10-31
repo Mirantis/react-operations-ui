@@ -7,6 +7,7 @@ import cx from "classnames";
 class FieldList extends Component {
   componentDidMount() {
     // pass the requested ref here
+    // TODO: Do not use string refs
     this.props.passInputData(this.refs);
   }
 
@@ -121,6 +122,7 @@ class FieldList extends Component {
           return this.getFormGropsRow(f, fields[i + 1]);
         } else {
           newRow = true;
+          return null;
         }
       }
       return this.getBaseFormGroup(f);
