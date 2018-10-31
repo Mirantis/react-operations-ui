@@ -244,9 +244,12 @@ ol.progtrckr {
   }
 }
 
+.tooltip-box {
+   border-radius: 4px !important;
+}
+
 .help-message {
   pointer-events: auto !important;
-  border-radius: 4px !important;
   max-width: 400px;
 }
 

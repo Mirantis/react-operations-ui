@@ -26,7 +26,7 @@ class HelpIcon extends Component {
               place='right'
               type='dark'
               effect='solid'
-              className='help-message'
+              className='help-message tooltip-box'
               delayHide={200}
               id='svgTooltip'
             />
