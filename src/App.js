@@ -65,7 +65,7 @@ class App extends Component {
       //
       // </div>
       //       ) : null
-       <div className={'container'}>
+       <div className={'fullscreen'}>
        <Login></Login>
        </div>
 

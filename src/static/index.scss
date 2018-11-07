@@ -1,5 +1,7 @@
 @import "./partials/variables";
 @import "./partials/mixins";
+//@import "../static/img/teal-cubes-left.svg";
+//@import "../static/img/teal-cubes-right.svg";
 
 /* CSS for Operations UI application. */
 
@@ -10,17 +12,61 @@
 html {
   font-weight: normal;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 100%;
 }
 
 body {
-  background-size: 150px, auto;
   background-color: #fff;
   color: $base-text;
+}
+.login-icon {
+  position: absolute;
+  bottom: 10px;
+  left: 6px;
+}
+.login-input {
+  padding-left: 28px;
+}
+.mirantis-background {
+
+  background: linear-gradient(180deg, #5d8e9b, #75467f);
+
+  &:before {
+    background: url('img/teal-cubes-left.svg');
+    background-size: auto 100%;
+    background-position: left -110px center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    @media (max-width: 1300px) {
+      background-size: auto 70%;
+    }
+  }
+  &:after {
+    background: url('img/teal-cubes-right.svg');
+    background-size: auto 100%;
+    background-position: right -110px center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    z-index: -1;
+    @media (max-width: 1300px) {
+      background-size: auto 70%;
+    }
+  }
 }
 
 ul.link-list {
   list-style-type: none;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 h1, h2 {
@@ -36,9 +82,10 @@ h1, h2 {
   margin-right: auto;
   margin-top: 50px;
   margin-bottom: 50px;
-  width:80%;
+  width: 80%;
 
 }
+
 .alert-holder {
   margin: 40px;
 }
@@ -49,6 +96,37 @@ h1, h2 {
   border-color: darken($mira-red, 10%);
 }
 
+//******************************************************************************
+// Login view
+//******************************************************************************
+
+.login-container {
+  text-align: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 250px;
+
+  .panel-header {
+    margin-bottom: 15px;
+    h1 {
+      font-family: Exo\ 2, sans-serif;
+      color: $white;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+  }
+  .panel-body {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+.btn-login {
+  margin-top: 40px;
+  @include bootstrap-btn($white, $mira-razzmatazz, $mira-razzmatazz, 'login')
+}
 
 // *****************************************************************************
 // Template build loading
@@ -130,6 +208,11 @@ h1, h2 {
   }
 }
 
+.btn {
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
 .btn-primary {
   color: $gray-lighter;
   background-color: $brand-primary;
@@ -141,7 +224,7 @@ h1, h2 {
 }
 
 .btn-outline-primary {
-  @include bootstrap-btn($brand-primary, #fff, $brand-primary, 'primary')
+  @include bootstrap-btn($brand-primary, $white, $brand-primary, 'primary')
 }
 
 .btn-success {
@@ -245,7 +328,7 @@ ol.progtrckr {
 }
 
 .tooltip-box {
-   border-radius: 4px !important;
+  border-radius: 4px !important;
 }
 
 .help-message {
