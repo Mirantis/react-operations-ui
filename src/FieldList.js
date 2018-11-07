@@ -114,7 +114,6 @@ class FieldList extends Component {
     const fields = this.props.fields;
 
     let newRow = true;
-
     const formFields = fields.map((f, i) => {
       if (f.width === 'half') {
         if (newRow) {

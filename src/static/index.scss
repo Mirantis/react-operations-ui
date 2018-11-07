@@ -1,7 +1,5 @@
 @import "./partials/variables";
 @import "./partials/mixins";
-//@import "../static/img/teal-cubes-left.svg";
-//@import "../static/img/teal-cubes-right.svg";
 
 /* CSS for Operations UI application. */
 
@@ -18,50 +16,6 @@ html {
 body {
   background-color: #fff;
   color: $base-text;
-}
-.login-icon {
-  position: absolute;
-  bottom: 10px;
-  left: 6px;
-}
-.login-input {
-  padding-left: 28px;
-}
-.mirantis-background {
-
-  background: linear-gradient(180deg, #5d8e9b, #75467f);
-
-  &:before {
-    background: url('img/teal-cubes-left.svg');
-    background-size: auto 100%;
-    background-position: left -110px center;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    @media (max-width: 1300px) {
-      background-size: auto 70%;
-    }
-  }
-  &:after {
-    background: url('img/teal-cubes-right.svg');
-    background-size: auto 100%;
-    background-position: right -110px center;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    z-index: -1;
-    @media (max-width: 1300px) {
-      background-size: auto 70%;
-    }
-  }
 }
 
 ul.link-list {
@@ -99,6 +53,53 @@ h1, h2 {
 //******************************************************************************
 // Login view
 //******************************************************************************
+
+.login-icon {
+  position: absolute;
+  bottom: 10px;
+  left: 6px;
+}
+
+.login-input {
+  padding-left: 28px;
+}
+
+.mirantis-background {
+
+  background: linear-gradient(180deg, #5d8e9b, #75467f);
+
+  &:before {
+    background: url('img/teal-cubes-left.svg');
+    background-size: auto 100%;
+    background-position: left -110px center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    @media (max-width: 1300px) {
+      background-size: auto 70%;
+    }
+  }
+  &:after {
+    background: url('img/teal-cubes-right.svg');
+    background-size: auto 100%;
+    background-position: right -110px center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    z-index: -1;
+    @media (max-width: 1300px) {
+      background-size: auto 70%;
+    }
+  }
+}
 
 .login-container {
   text-align: center;
@@ -186,7 +187,7 @@ h1, h2 {
       display: inline-block;
       padding-left: 20px;
       color: $gray-lighter;
-      font-size: 35px;;
+      font-size: 35px;
     }
   }
 
