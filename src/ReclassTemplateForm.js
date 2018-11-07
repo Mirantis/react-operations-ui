@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Form, Button} from 'reactstrap';
+import AxiosInstance from "./Interceptor";
 import FieldList from './FieldList'
-import axios from "axios";
+
 
 const ReactDOM = require('react-dom');
 
@@ -23,14 +24,11 @@ class ReclassTemplateForm extends Component {
       }
     });
     console.log(inputValues);
-    axios.post(
-      `${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/submit`,
-      inputValues,
-      { headers: {'Content-Type': 'application/json' },
-    }).then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err.response);
+    AxiosInstance.post('modelform/submit', inputValues
+    ).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err.response);
     });
     this.props.toggleTemplateAdding(null)
   };
@@ -47,21 +45,21 @@ class ReclassTemplateForm extends Component {
     const activeTemplate = JSON.parse(this.props.activeTemplate);
     let fields = activeTemplate.general_params_action[0].fields;
     return (
-        <Form className='template-form'>
-          <FieldList
-            fields={fields}
-            passInputData={this.getRefsFromChild}
-          />
-          <Button
-            className={'wizard-submit'}
-            color='success'
-            type='submit'
-            size='lg'
-            onClick={this.submitFormData}
-          >
-            Submit
-          </Button>
-        </Form>
+      <Form className='template-form'>
+        <FieldList
+          fields={fields}
+          passInputData={this.getRefsFromChild}
+        />
+        <Button
+          className={'wizard-submit'}
+          color='success'
+          type='button'
+          size='lg'
+          onClick={this.submitFormData}
+        >
+          Submit
+        </Button>
+      </Form>
     )
   }
 }
