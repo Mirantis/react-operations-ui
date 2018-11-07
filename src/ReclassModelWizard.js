@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import StepZilla from 'react-stepzilla';
-import axios from "axios";
+import AxiosInstance from './Interceptor'
 import FieldList from "./FieldList";
 
 const ReactDOM = require('react-dom');
@@ -15,7 +15,7 @@ class ReclassModelWizard extends Component {
 
   submitWizardData = () => {
     console.log(this.wizardStorage);
-    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/metadata/submit`, this.wizardStorage)
+    AxiosInstance.post('metadata/submit', this.wizardStorage)
       .then(res => {
         console.log(res);
         console.log(res.data);

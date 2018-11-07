@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {Table} from 'reactstrap';
+import AxiosInstance from './Interceptor'
 import TableRow from './TableRow';
 import TableManager from './TableManager';
 import ReclassTemplateForm from "./ReclassTemplateForm";
 import ErrorHolder from "./ErrorHolder";
 
-require('dotenv').config();
 
 class TemplatesTable extends Component {
   constructor(props, context) {
@@ -21,10 +20,6 @@ class TemplatesTable extends Component {
       showError: false,
     };
     this.activeTemplate = null;
-    this.requestHeader = {
-      headers: {Authorization: 'Bearer ' + sessionStorage.getItem('kc_token')},
-      responseType: 'json'
-    };
   }
 
   toggleTemplateAdding = (item) => {
@@ -32,15 +27,16 @@ class TemplatesTable extends Component {
       this.activeTemplate = item.template;
       this.setState(prevState => (
         {templates: prevState.templates.concat(item)}));
-    }
-    this.setState(prevState => ({
+      this.setState(prevState => ({
       showAddTemplateForm: !prevState.showAddTemplateForm,
     }));
-
+    } else {
+       this.setState( { showAddTemplateForm: false });
+    }
   };
 
   componentDidMount() {
-    axios.get(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates`, this.requestHeader)
+    AxiosInstance.get('modelform/templates')
       .then(
         res => {
           const templates = res.data;
@@ -56,7 +52,7 @@ class TemplatesTable extends Component {
   }
 
   removeTemplate = (tId) => {
-    axios.delete(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates/` + tId, this.requestHeader)
+    AxiosInstance.delete('modelform/templates/' + tId)
       .then(res => {
         return this.setState(prevState => (
           { templates: prevState.templates.filter((obj => (obj.id !== tId))) })
@@ -85,10 +81,7 @@ class TemplatesTable extends Component {
         />
       ) : (
         <div className={'table-content'}>
-          <TableManager
-            toggleTemplateAdding={this.toggleTemplateAdding}
-            requestHeader={this.requestHeader}
-          />
+          <TableManager toggleTemplateAdding={this.toggleTemplateAdding}/>
           <Table
             striped
             bordered

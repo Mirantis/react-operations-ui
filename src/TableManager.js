@@ -1,13 +1,12 @@
 import {Component} from "react";
-import axios from "axios";
 import {Button} from "reactstrap";
 import React from "react";
-
+import AxiosInstance from './Interceptor'
 
 class TableManager extends Component {
 
   addTemplate = () => {
-    axios.post(`${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/modelform/templates`, this.props.requestHeader)
+    AxiosInstance.post('modelform/templates')
       .then(res => {
         return this.props.toggleTemplateAdding(res.data);
       })
