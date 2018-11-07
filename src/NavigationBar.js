@@ -14,7 +14,7 @@ class NavigationBar extends Component {
                 alt='Mirantis'
               />
 
-            <h1>Reclass Model Form Generator</h1>
+            <h1>TryMCP</h1>
           </div>
           <div id='navbar' className='navbar-collapse collapse'>
             {/* dropdown menu will be here*/}
