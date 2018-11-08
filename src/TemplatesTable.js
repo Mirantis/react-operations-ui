@@ -14,7 +14,6 @@ class TemplatesTable extends Component {
     this.state = {
       templates: [],
       showAddTemplateForm: false,
-      keycloak: null,
       authenticated: false,
       errMessage: '',
       showError: false,
