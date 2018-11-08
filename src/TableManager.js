@@ -20,7 +20,7 @@ class TableManager extends Component {
     return (
       <div className={'page-header'}>
         <h2>
-          Cookiecutter Templates
+          Reclass Model Templates
         </h2>
         <Button
           color='primary'

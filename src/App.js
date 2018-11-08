@@ -10,10 +10,9 @@ class App extends Component {
 
   constructor(props, context) {
     super(props, context);
-    let isLoggedin = sessionStorage.getItem('authenticated');
 
     this.state = {
-      authenticated: isLoggedin,
+      authenticated: sessionStorage.getItem('authenticated'),
     }
   }
 

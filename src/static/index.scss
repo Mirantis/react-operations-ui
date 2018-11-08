@@ -107,10 +107,10 @@ h1, h2 {
   top: 40%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 250px;
+  width: 300px;
 
   .panel-header {
-    margin-bottom: 15px;
+    margin-bottom: 40px;
     h1 {
       font-family: Exo\ 2, sans-serif;
       color: $white;
@@ -121,12 +121,24 @@ h1, h2 {
   .panel-body {
     margin-top: 15px;
     margin-bottom: 15px;
+    .alert-danger {
+      color: $mira-razzmatazz;
+      background-color: lighten($mira-razzmatazz, 40%) !important;
+      border-color: $mira-razzmatazz;
+      svg {
+        width: 50px;
+        path {
+          fill: $mira-razzmatazz;
+      }
+    }
+    }
+    .alert {
+      padding: 10px 10px;
+    }
+    .btn-success {
+      margin-top: 40px;
+    }
   }
-}
-
-.btn-login {
-  margin-top: 40px;
-  @include bootstrap-btn($white, $mira-razzmatazz, $mira-razzmatazz, 'login')
 }
 
 // *****************************************************************************

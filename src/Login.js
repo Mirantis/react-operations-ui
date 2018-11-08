@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Form, Button, Input, FormGroup} from 'reactstrap';
-import axios from "axios";
+import {Form, Button, Input, FormGroup, Alert} from 'reactstrap';
+import axios from 'axios';
 
 
 class Login extends Component {
@@ -8,8 +8,10 @@ class Login extends Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
-    }
+      password: '',
+      hasError: false
+    };
+    this.errorMsg = '';
   }
 
   componentDidMount() {
@@ -22,7 +24,13 @@ class Login extends Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-
+    // Handle empty data
+    if (!this.state.username) {
+      return this.raiseError('Username is required');
+    }
+    if (!this.state.password) {
+      return this.raiseError('Password is required');
+    }
     axios.post(
       `${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/auth/login`,
       this.state, { headers: {'Content-Type': 'application/json' },
@@ -31,11 +39,28 @@ class Login extends Component {
         sessionStorage.setItem('authenticated', 'true');
         this.props.setAuthenticated(true);
       }).catch(err => {
-        this.props.setAuthenticated(false);
-        // ToDo: Show alert message
+        if (!err.response) {
+          return this.raiseError('Operations API is not responding');
+        }
         console.log(err.response);
+        if (err.response.status === 401) {
+          return this.raiseError('Login credentials incorrect');
+        }
     });
   };
+
+  handleTyping = (e) => {
+    if (this.state.hasError) {
+      this.setState({ hasError: false });
+    }
+    this.setState({ [e.target.name]: e.target.value })
+  };
+
+  raiseError = (msg) => {
+    this.errorMsg = msg;
+    this.setState({ hasError: true })
+  };
+
   render() {
     return (
       <>
@@ -44,16 +69,28 @@ class Login extends Component {
             <h1>TryMCP</h1>
           </div>
           <div className='panel-body'>
-            <Form className='login-form'  onSubmit={this.onFormSubmit}>
+            { this.state.hasError ? (
+              <Alert color='danger'>
+                <div>
+                  <svg viewBox='0 0 24 24' preserveAspectRatio="xMidYMin slice">
+                    <path
+                      d='M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16'
+                    />
+                  </svg>
+                </div>
+                {this.errorMsg}</Alert>
+            ) : null
+            }
+            <Form className='login-form' onSubmit={this.onFormSubmit}>
               <FormGroup>
                 <svg
                   className='login-icon'
                   width='18'
                   height='18'
-                  viewBox="0 0 24 24"
+                  viewBox='0 0 24 24'
                 >
-                  <path fill="#495057"
-                        d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
+                  <path fill='#495057'
+                        d='M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z'
                   />
                 </svg>
                 <Input
@@ -63,7 +100,7 @@ class Login extends Component {
                   className='login-input'
                   autoComplete='username'
                   value={this.state.username}
-                  onChange={e => this.setState({ username: e.target.value })}
+                  onChange={this.handleTyping}
                 />
               </FormGroup>
               <FormGroup>
@@ -84,12 +121,12 @@ class Login extends Component {
                   className='login-input'
                   autoComplete='current-password'
                   value={this.state.password}
-                  onChange={e => this.setState({ password: e.target.value })}
+                  onChange={this.handleTyping }
                 />
               </FormGroup>
               <Button
                 block
-                color='login'
+                color='success'
                 type='submit'
               >
                 Log in
