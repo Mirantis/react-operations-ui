@@ -185,21 +185,53 @@ h1, h2 {
 // NavigationBar
 // *****************************************************************************
 
-.navbar-inverse {
+.navbar {
   margin-bottom: 0px;
   background-color: $mira-purple-dark;
-  .navbar-header {
+  a {
+    color: $white;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    }
+  svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 3px;
+    position: relative;
+    top: -2px;
+    path {
+      fill: $white;
+    }
+  }
+  .logout-icon {
+    path {
+      fill: $mira-red-dark;
+    }
+  }
+  .dropdown-menu {
+    background: lighten($mira-purple-dark, 45%);
+  }
+  .dropdown-item {
+    color: $mira-red-dark;
+    &:hover , &:active {
+      background-color: lighten($mira-purple-dark, 50%);
+    }
+  }
+  .navbar-brand {
     padding-left: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
     img.mirantis-logo {
       position: relative;
-      top: -8px;
+      top: -5px;
       width: 200px;
     }
     h1 {
       display: inline-block;
       padding-left: 20px;
       color: $gray-lighter;
-      font-size: 35px;
+      font-size: 32px;
+      letter-spacing: 2px;
     }
   }
 
@@ -249,9 +281,9 @@ h1, h2 {
   position: relative;
   top: -5px;
   path {
-    fill: $mira-burgundy;
+    fill: $mira-red-dark;
     &:hover {
-      fill: lighten($mira-burgundy, 10%);
+      fill: lighten($mira-red-dark, 10%);
     }
   }
 }
