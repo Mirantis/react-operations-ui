@@ -59,6 +59,7 @@ class TemplatesTable extends Component {
   componentWillUnmount(){
    this._isMounted = false;
   }
+
   removeTemplate = (tId) => {
     AxiosInstance.delete('modelform/templates/' + tId)
       .then(res => {

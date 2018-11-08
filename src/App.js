@@ -17,6 +17,7 @@ class App extends Component {
   }
 
   setAuthenticated = (value) => {
+    sessionStorage.setItem('authenticated', 'false');
     this.setState({authenticated: value})
   };
 
@@ -43,7 +44,6 @@ class App extends Component {
         })
           .catch(err => {
             // Refresh token is expired
-            sessionStorage.setItem('authenticated', 'false');
             this.setAuthenticated(false)
           })
       } else {
@@ -57,7 +57,7 @@ class App extends Component {
     return (
       isAuthenticated ? (
         <div>
-          <NavigationBar/>
+          <NavigationBar setAuthenticated={this.setAuthenticated}/>
           <div className={'container'}>
             <TemplatesTable/>
           </div>
