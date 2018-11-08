@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {Button} from "reactstrap";
 import React from "react";
-import AxiosInstance from './Interceptor'
+import AxiosInstance from './AxiosInstance'
 
 class TableManager extends Component {
 

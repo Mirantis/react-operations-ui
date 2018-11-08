@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
-import AxiosInstance from './Interceptor'
+import AxiosInstance from './AxiosInstance'
 import TableRow from './TableRow';
 import TableManager from './TableManager';
 import ReclassTemplateForm from "./ReclassTemplateForm";
@@ -20,6 +20,7 @@ class TemplatesTable extends Component {
       showError: false,
     };
     this.activeTemplate = null;
+    this._isMounted = false
   }
 
   toggleTemplateAdding = (item) => {
@@ -36,21 +37,28 @@ class TemplatesTable extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     AxiosInstance.get('modelform/templates')
       .then(
         res => {
           const templates = res.data;
-          this.setState({templates});
+          if (this._isMounted) {
+            this.setState({ templates });
+          }
         })
       .catch(
         error => {
-          console.log(error.response);
-          this.setState({errMessage: error.message});
-          this.setState({showError: true});
+          if (this._isMounted) {
+            this.setState({errMessage: error.message});
+            this.setState({showError: true});
+          }
         }
       );
   }
 
+  componentWillUnmount(){
+   this._isMounted = false;
+  }
   removeTemplate = (tId) => {
     AxiosInstance.delete('modelform/templates/' + tId)
       .then(res => {

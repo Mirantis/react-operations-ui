@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Button} from 'reactstrap';
-import AxiosInstance from "./Interceptor";
+import AxiosInstance from "./AxiosInstance";
 import FieldList from './FieldList'
 
 

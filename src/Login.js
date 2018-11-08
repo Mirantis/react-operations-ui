@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Form, Button, Input, FormGroup} from 'reactstrap';
 import axios from "axios";
 
-import AuthContext from './App'
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +27,6 @@ class Login extends Component {
       `${process.env.REACT_APP_OPERATIONS_API_URL}/api/v1/auth/login`,
       this.state, { headers: {'Content-Type': 'application/json' },
     }).then(res => {
-        sessionStorage.setItem('token', res.data['access_token']);
         sessionStorage.setItem('refreshToken', res.data['refresh_token']);
         sessionStorage.setItem('authenticated', 'true');
         this.props.setAuthenticated(true);
@@ -66,7 +64,7 @@ class Login extends Component {
                   autoComplete='username'
                   value={this.state.username}
                   onChange={e => this.setState({ username: e.target.value })}
-                ></Input>
+                />
               </FormGroup>
               <FormGroup>
                 <svg
