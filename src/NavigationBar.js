@@ -21,7 +21,6 @@ class NavigationBar extends Component {
       isOpen: false,
       username: '',
     };
-
   }
 
   toggleDropdownOpen = () => {
