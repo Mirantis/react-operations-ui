@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import StepZilla from 'react-stepzilla';
-import AxiosInstance from './Interceptor'
+import AxiosInstance from './AxiosInstance'
 import FieldList from "./FieldList";
 
 const ReactDOM = require('react-dom');

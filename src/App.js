@@ -3,24 +3,22 @@ import NavigationBar from './NavigationBar';
 import TemplatesTable from './TemplatesTable';
 import Login from './Login';
 
-import AxiosInstance from './Interceptor'
+import AxiosInstance from './AxiosInstance'
 import axios from "axios";
 
 class App extends Component {
 
   constructor(props, context) {
     super(props, context);
-    let isLoggedin = sessionStorage.getItem('authenticated');
 
     this.state = {
-      authenticated: isLoggedin,
+      authenticated: sessionStorage.getItem('authenticated'),
     }
   }
 
   setAuthenticated = (value) => {
     this.setState({authenticated: value})
   };
-
 
   render() {
     AxiosInstance.interceptors.response.use((response) => {
@@ -57,17 +55,14 @@ class App extends Component {
 
     let isAuthenticated = this.state.authenticated;
     return (
-
       isAuthenticated ? (
         <div>
           <NavigationBar/>
-
           <div className={'container'}>
             <TemplatesTable/>
           </div>
         </div>
       ) : (
-
         <div>
           <Login setAuthenticated={this.setAuthenticated}/>
         </div>
