@@ -129,8 +129,8 @@ h1, h2 {
         width: 50px;
         path {
           fill: $mira-razzmatazz;
+        }
       }
-    }
     }
     .alert {
       padding: 10px 10px;
@@ -192,7 +192,7 @@ h1, h2 {
     color: $white;
     letter-spacing: 0.5px;
     font-size: 18px;
-    }
+  }
   svg {
     width: 18px;
     height: 18px;
@@ -213,7 +213,7 @@ h1, h2 {
   }
   .dropdown-item {
     color: $mira-red-dark;
-    &:hover , &:active {
+    &:hover, &:active {
       background-color: lighten($mira-purple-dark, 50%);
     }
   }
@@ -285,6 +285,43 @@ h1, h2 {
     &:hover {
       fill: lighten($mira-red-dark, 10%);
     }
+  }
+}
+
+.user-select {
+  user-select: none;
+  display: block;
+}
+
+.empty-table-content {
+  padding-top: 60px;
+  padding-bottom: 30px;
+  background-color: lighten($mira-purple-dark, 56%);
+  h3 {
+    color: $mira-purple-dark;
+    padding-right: 15px;
+    padding-left: 25px;
+    display: inline;
+    font-weight: 600;
+    font-size: 26px;
+  }
+  .empty-table-content-header {
+    text-align: right;
+    padding-right: 40px;
+  }
+  .arrow-empty-table-content {
+    position: relative;
+    top: -40px;
+    height: 80px;
+  }
+  @media (max-width: 1000px) {
+    .arrow-empty-table-content {
+      display: none;
+    }
+  }
+  .workflow-empty-table-content {
+    max-width: 100%;
+    max-height: 100%;
   }
 }
 
@@ -442,3 +479,4 @@ ol.progtrckr {
     color: #00b894;
   }
 }
+
